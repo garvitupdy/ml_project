@@ -6,29 +6,28 @@ import plotly.express as px
 from datetime import datetime
 import time
 
-# Page configuration
+
 st.set_page_config(
     page_title="Stroke Prediction System",
     page_icon="🏥",
     layout="wide",
     initial_sidebar_state="expanded"
-)
+) 
 
-# Dark Theme Custom CSS with Fixed Header Position
 st.markdown("""
     <style>
-    /* Main background - Dark */
+  
     .main {
         background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
         background-attachment: fixed;
     }
     
-    /* Streamlit default background override */
+    
     .stApp {
         background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     }
     
-    /* Content container - Dark with transparency */
+    
     .block-container {
         background: rgba(26, 26, 46, 0.95);
         border-radius: 20px;
@@ -39,7 +38,7 @@ st.markdown("""
         margin-top: 1rem;
     }
     
-    /* Animated header - Added top margin */
+    
     .main-header {
         font-size: 48px;
         font-weight: bold;
@@ -60,7 +59,7 @@ st.markdown("""
         100% {background-position: 0% 50%;}
     }
     
-    /* Sub-header with light text */
+    
     .sub-header {
         font-size: 20px;
         color: #e0e0e0;
@@ -70,22 +69,22 @@ st.markdown("""
         text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     }
     
-    /* Spacer for top */
+    
     .top-spacer {
         height: 80px;
     }
     
-    /* All text colors */
+    
     .stMarkdown, .stText, p, span, label {
         color: #e0e0e0 !important;
     }
     
-    /* Headers */
+    
     h1, h2, h3, h4, h5, h6 {
         color: #ffffff !important;
     }
     
-    /* Enhanced button */
+    
     .stButton>button {
         width: 100%;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -105,7 +104,7 @@ st.markdown("""
         background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
     }
     
-    /* Card styling - Dark theme */
+    
     .info-card {
         background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%);
         border-radius: 15px;
@@ -130,7 +129,7 @@ st.markdown("""
         color: #e0e0e0 !important;
     }
     
-    /* Prediction boxes with animation */
+    
     .prediction-box {
         padding: 30px;
         border-radius: 20px;
@@ -188,7 +187,7 @@ st.markdown("""
         color: #e0e0e0 !important;
     }
     
-    /* Number input styling */
+    
     .stNumberInput > label {
         font-weight: 600;
         color: #e0e0e0 !important;
@@ -202,7 +201,7 @@ st.markdown("""
         border-radius: 10px;
     }
     
-    /* Expander styling */
+    
     .streamlit-expanderHeader {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         border-radius: 10px;
@@ -216,7 +215,7 @@ st.markdown("""
         color: #e0e0e0 !important;
     }
     
-    /* Tabs styling */
+    
     .stTabs [data-baseweb="tab-list"] {
         gap: 8px;
         background: rgba(26, 26, 46, 0.8);
@@ -238,7 +237,7 @@ st.markdown("""
         color: white !important;
     }
     
-    /* Metrics styling */
+    
     .metric-card {
         background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%);
         padding: 20px;
@@ -257,7 +256,7 @@ st.markdown("""
         color: #b0b0b0 !important;
     }
     
-    /* Pulse animation for warnings */
+    
     @keyframes pulse {
         0% {
             box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7);
@@ -274,7 +273,7 @@ st.markdown("""
         animation: pulse 2s infinite;
     }
     
-    /* Custom scrollbar - Dark */
+    
     ::-webkit-scrollbar {
         width: 10px;
     }
@@ -293,7 +292,7 @@ st.markdown("""
         background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
     }
     
-    /* Icon animation */
+    
     @keyframes float {
         0% {
             transform: translateY(0px);
@@ -310,7 +309,7 @@ st.markdown("""
         animation: float 3s ease-in-out infinite;
     }
     
-    /* Section headers - Dark */
+    
     .section-header {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white !important;
@@ -322,7 +321,7 @@ st.markdown("""
         box-shadow: 0 4px 10px rgba(102, 126, 234, 0.4);
     }
     
-    /* Stats box - Dark */
+    
     .stats-box {
         background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%);
         color: white !important;
@@ -333,7 +332,7 @@ st.markdown("""
         border: 1px solid rgba(102, 126, 234, 0.5);
     }
     
-    /* Badge */
+    
     .badge {
         display: inline-block;
         padding: 5px 15px;
@@ -358,13 +357,13 @@ st.markdown("""
         color: white !important;
     }
     
-    /* DataFrame styling */
+    
     .dataframe {
         background: rgba(26, 26, 46, 0.9) !important;
         color: #e0e0e0 !important;
     }
     
-    /* Sidebar styling */
+    
     section[data-testid="stSidebar"] {
         background: linear-gradient(180deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     }
@@ -381,7 +380,7 @@ st.markdown("""
         border-radius: 10px;
     }
     
-    /* Metric styling */
+    
     [data-testid="stMetricValue"] {
         color: #667eea !important;
     }
@@ -394,13 +393,13 @@ st.markdown("""
         color: #51cf66 !important;
     }
     
-    /* Divider */
+    
     hr {
         border-color: rgba(102, 126, 234, 0.3) !important;
         margin: 2rem 0;
     }
     
-    /* Links */
+    
     a {
         color: #667eea !important;
     }
@@ -409,16 +408,16 @@ st.markdown("""
         color: #764ba2 !important;
     }
     
-    /* Plotly dark theme */
+
     .js-plotly-plot {
         background: transparent !important;
     }
     
-    /* Hide Streamlit branding elements that might overlap */
+    
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     
-    /* Adjust for deploy button in header */
+    
     header[data-testid="stHeader"] {
         background: rgba(15, 12, 41, 0.95);
         backdrop-filter: blur(10px);
@@ -427,14 +426,13 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Add top spacer to push content down
+
 st.markdown('<div class="top-spacer"></div>', unsafe_allow_html=True)
 
-# Header with animation - now with proper spacing
+
 st.markdown('<p class="main-header floating-icon">🏥 Stroke Risk Prediction System</p>', unsafe_allow_html=True)
 st.markdown('<p class="sub-header">💡 Early detection can save lives. Please answer the following questions honestly.</p>', unsafe_allow_html=True)
 
-# Add date and time
 col_time1, col_time2, col_time3 = st.columns([1, 2, 1])
 with col_time2:
     st.markdown(f"""
@@ -446,17 +444,17 @@ with col_time2:
 
 st.markdown("---")
 
-# Create tabs for better organization
+
 tab1, tab2, tab3 = st.tabs(["📋 Assessment", "📊 Risk Analysis", "💡 Health Tips"])
 
 with tab1:
-    # Create two columns
+    
     col1, col2 = st.columns(2)
     
     with col1:
         st.markdown('<div class="section-header">📋 Basic Information</div>', unsafe_allow_html=True)
         
-        # Age input with visual feedback
+        
         age = st.number_input(
             "What is your age?",
             min_value=1,
@@ -466,7 +464,7 @@ with tab1:
             help="Enter your age in years"
         )
         
-        # Age category display
+        
         if age < 18:
             age_category = "Child/Teenager"
             age_color = "#4dabf7"
@@ -488,7 +486,7 @@ with tab1:
         
         st.markdown('<div class="section-header">🩺 General Symptoms</div>', unsafe_allow_html=True)
         
-        # Anxiety with icon
+        
         st.markdown("### 😰 Anxiety Status")
         anxiety = st.radio(
             "Are you feeling anxious?",
@@ -498,7 +496,7 @@ with tab1:
             key="anxiety"
         )
         
-        # Excessive sweating
+        
         st.markdown("### 💧 Sweating")
         excessive_sweating = st.radio(
             "Are you sweating more than usual?",
@@ -507,8 +505,7 @@ with tab1:
             help="Select if you're experiencing excessive sweating",
             key="sweating"
         )
-        
-        # Swelling
+   
         st.markdown("### 🎈 Swelling")
         swelling = st.radio(
             "Is any body part swollen out of nowhere?",
@@ -518,7 +515,7 @@ with tab1:
             key="swelling"
         )
         
-        # Fatigue
+
         st.markdown("### 😴 Fatigue")
         fatigue = st.radio(
             "Are you feeling tired without doing physically demanding activities?",
@@ -599,18 +596,18 @@ with tab1:
     
     st.markdown("---")
     
-    # Predict button
+    
     predict_button = st.button("🔍 Predict Stroke Risk", use_container_width=True)
     
     if predict_button:
-        # Show loading animation
+        
         with st.spinner('🔄 Analyzing your health data...'):
             progress_bar = st.progress(0)
             for i in range(100):
                 time.sleep(0.01)
                 progress_bar.progress(i + 1)
         
-        # Convert inputs
+        
         def convert_yes_no(value):
             return 1 if value == "Yes" else 0
         
@@ -624,7 +621,7 @@ with tab1:
             }
             return mapping.get(value, 0)
         
-        # Prepare input data
+        
         input_data = {
             'age': age,
             'anxiety': convert_yes_no(anxiety),
@@ -638,7 +635,7 @@ with tab1:
         
         input_df = pd.DataFrame([input_data])
         
-        # Dummy prediction
+        
         total_symptoms = sum([
             convert_yes_no(anxiety),
             convert_yes_no(excessive_sweating),
@@ -654,7 +651,7 @@ with tab1:
         
         st.markdown("---")
         
-        # Results with enhanced visuals
+
         if prediction == 1:
             st.markdown(
                 '<div class="prediction-box high-risk pulse-warning">⚠️ HIGH RISK: Stroke Risk Detected</div>',
@@ -662,7 +659,7 @@ with tab1:
             )
             st.error("**Important:** The model indicates a potential stroke risk. Please consult a healthcare professional immediately!")
             
-            # Risk gauge with dark theme
+            
             fig = go.Figure(go.Indicator(
                 mode="gauge+number+delta",
                 value=prediction_proba[1] * 100,
@@ -717,7 +714,7 @@ with tab1:
             )
             st.success("**Good News:** The model indicates a lower stroke risk based on your inputs.")
             
-            # Risk gauge with dark theme
+            
             fig = go.Figure(go.Indicator(
                 mode="gauge+number+delta",
                 value=prediction_proba[1] * 100,
@@ -765,7 +762,7 @@ with tab1:
             </div>
             """, unsafe_allow_html=True)
         
-        # Symptom breakdown chart with dark theme
+        
         st.markdown("### 📊 Your Symptom Breakdown")
         
         symptom_data = {
@@ -800,7 +797,7 @@ with tab1:
         )
         st.plotly_chart(fig, use_container_width=True)
         
-        # Detailed input summary
+        
         with st.expander("📋 View Detailed Input Summary"):
             summary_col1, summary_col2 = st.columns(2)
             
@@ -825,7 +822,7 @@ with tab1:
 with tab2:
     st.markdown('<div class="section-header">📊 Stroke Risk Analysis Dashboard</div>', unsafe_allow_html=True)
     
-    # Statistics metrics
+
     metric_col1, metric_col2, metric_col3, metric_col4 = st.columns(4)
     
     with metric_col1:
@@ -862,7 +859,6 @@ with tab2:
     
     st.markdown("---")
     
-    # Age vs Stroke Risk Chart
     st.markdown("### 📈 Age vs Stroke Risk Correlation")
     
     age_data = pd.DataFrame({
@@ -890,7 +886,7 @@ with tab2:
     )
     st.plotly_chart(fig, use_container_width=True)
     
-    # Risk factors comparison
+    
     st.markdown("### ⚖️ Major Risk Factors Comparison")
     
     risk_factors = pd.DataFrame({
@@ -918,7 +914,7 @@ with tab2:
     )
     st.plotly_chart(fig, use_container_width=True)
     
-    # Warning signs
+    
     st.markdown("### ⚠️ Common Warning Signs")
     
     warning_col1, warning_col2 = st.columns(2)
@@ -954,7 +950,7 @@ with tab2:
 with tab3:
     st.markdown('<div class="section-header">💡 Health Tips & Prevention</div>', unsafe_allow_html=True)
     
-    # Lifestyle tips
+
     tip_col1, tip_col2 = st.columns(2)
     
     with tip_col1:
@@ -1013,7 +1009,7 @@ with tab3:
         </div>
         """, unsafe_allow_html=True)
     
-    # FAST acronym
+    
     st.markdown("### 🚨 Remember: F.A.S.T.")
     
     fast_col1, fast_col2, fast_col3, fast_col4 = st.columns(4)
@@ -1060,7 +1056,7 @@ with tab3:
     
     st.markdown("---")
     
-    # Emergency contacts
+    
     st.markdown("### 📞 Emergency Contacts")
     
     emergency_col1, emergency_col2 = st.columns(2)
@@ -1070,7 +1066,7 @@ with tab3:
         <div class='info-card'>
             <h4 style='color: #667eea !important;'>🚑 Emergency Numbers</h4>
             <ul style='color: #e0e0e0;'>
-                <li><strong>Emergency Services:</strong> 911 (US) / 112 (EU)</li>
+                <li><strong>Emergency Services:</strong> 911 (US) / 112 (IND)</li>
                 <li><strong>Stroke Helpline:</strong> 1-800-STROKES</li>
                 <li><strong>Health Info:</strong> 1-800-CDC-INFO</li>
             </ul>
@@ -1089,7 +1085,7 @@ with tab3:
         </div>
         """, unsafe_allow_html=True)
 
-# Enhanced Sidebar with dark theme
+
 with st.sidebar:
     st.markdown("""
     <div style='text-align: center; padding: 20px;'>
@@ -1117,7 +1113,7 @@ with st.sidebar:
     
     st.markdown("---")
     
-    # Tips rotation
+
     tips = [
         "💡 Regular exercise reduces stroke risk by 25%",
         "🥗 Mediterranean diet lowers stroke risk significantly",
@@ -1132,16 +1128,16 @@ with st.sidebar:
     
     st.markdown("---")
     
-    # Version and credits
+    
     st.markdown("""
     <div style='text-align: center; color: #e0e0e0;'>
         <p>🏥 Stroke Prediction System</p>
-        <p>Version 2.0</p>
-        <p>© 2024 Health AI Labs</p>
+        <p>Prototype Version</p>
+        <p>©  Health Diagnostic Labs</p>
     </div>
     """, unsafe_allow_html=True)
 
-# Footer
+
 st.markdown("---")
 st.markdown("""
 <div style='text-align: center; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
